@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probleme1", "Probleme1\Probleme1.csproj", "{0B99E8E6-A658-4362-B0E0-409B1120D105}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sport", "Probleme1\Sport.csproj", "{0B99E8E6-A658-4362-B0E0-409B1120D105}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parchet", "Parchet\Parchet.csproj", "{47941C94-6CE7-4D62-8437-2AD574DB77F2}"
 EndProject
