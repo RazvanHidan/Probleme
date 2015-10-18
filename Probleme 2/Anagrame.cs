@@ -9,7 +9,7 @@ namespace Anagrame
         [TestMethod]
         public void TestAnagrame()
         {
-            Assert.AreEqual(CalculateAnagram("Math"), 24);
+            Assert.AreEqual(CalculateAnagram("Math"),24);
         }
         long Permutation(int number)
         {
