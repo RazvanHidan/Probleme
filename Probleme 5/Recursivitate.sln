@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recursivitate", "Recursivitate\Recursivitate.csproj", "{17148621-944D-423D-A5F5-2E8BE5F94D95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pascal", "Pascal\Pascal.csproj", "{A567E6BD-278C-4F42-9A1B-B74D8C80140B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hanoi", "Hanoi\Hanoi.csproj", "{2AD27228-6C15-4551-BBD0-989CE81A188A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17148621-944D-423D-A5F5-2E8BE5F94D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17148621-944D-423D-A5F5-2E8BE5F94D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17148621-944D-423D-A5F5-2E8BE5F94D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17148621-944D-423D-A5F5-2E8BE5F94D95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A567E6BD-278C-4F42-9A1B-B74D8C80140B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A567E6BD-278C-4F42-9A1B-B74D8C80140B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A567E6BD-278C-4F42-9A1B-B74D8C80140B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A567E6BD-278C-4F42-9A1B-B74D8C80140B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AD27228-6C15-4551-BBD0-989CE81A188A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD27228-6C15-4551-BBD0-989CE81A188A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD27228-6C15-4551-BBD0-989CE81A188A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD27228-6C15-4551-BBD0-989CE81A188A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
