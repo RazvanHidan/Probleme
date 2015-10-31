@@ -28,6 +28,28 @@ namespace UnitTestProject1
             array.Insert(6, 2);
             Assert.AreEqual(array.LengthArray(), 4);
         }
+        [TestMethod]
+        public void DeleteElemennt()
+        {
+            DynamicArray array = new DynamicArray();
+            array.Add(7);
+            array.Delete(1);
+            Assert.AreEqual(array.LengthArray(), 0);
+            array.Add(1);
+            array.Add(4);
+            array.Delete(2);
+            Assert.AreEqual(array.LengthArray(), 1);
+            array.Add(2);
+            array.Add(8);
+            array.Add(7);
+            array.Delete(2);
+            Assert.AreEqual(array.LengthArray(), 3);
+            array.Add(6);
+            array.Add(1);
+            array.Add(9);
+            array.Delete(1);
+            Assert.AreEqual(array.LengthArray(), 5);
+        }
 
         public class DynamicArray
         {
@@ -64,6 +86,14 @@ namespace UnitTestProject1
                     elements[i] = element;
                     element = aux;
                 }
+            }
+
+            public void Delete(int deletePosition)
+            {
+                if (!((deletePosition == elements.Length) || (elements.Length == 1))) 
+                    for (int i = deletePosition-1; i < elements.Length - 1; i++)
+                        elements[i] = elements[i + 1];
+                IncreaseLength(-1);
             }
         }
     }
