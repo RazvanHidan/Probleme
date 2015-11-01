@@ -50,7 +50,20 @@ namespace UnitTestProject1
             array.Delete(1);
             Assert.AreEqual(array.LengthArray(), 5);
         }
-
+        [TestMethod]
+        public void GetValueOfPosition()
+        {
+            DynamicArray array = new DynamicArray();
+            array.Add(7);
+            array.Add(1);
+            array.Add(4);
+            array.Add(2);
+            array.Add(8);
+            array.Add(7);
+            Assert.AreEqual(array.GetElementAt(1), 7);
+            Assert.AreEqual(array.GetElementAt(-1), 0);
+            Assert.AreEqual(array.GetElementAt(12), 0);
+        }
         public class DynamicArray
         {
             private int[] elements;
@@ -94,6 +107,12 @@ namespace UnitTestProject1
                     for (int i = deletePosition-1; i < elements.Length - 1; i++)
                         elements[i] = elements[i + 1];
                 IncreaseLength(-1);
+            }
+            public int GetElementAt(int position)
+            {
+                if ((position < elements.Length+1) && (position > 0)) 
+                    return elements[position-1];
+                return 0;
             }
         }
     }
