@@ -84,6 +84,17 @@ namespace UnitTestProject1
             array.Add(7);
             Assert.AreEqual(array.GetCount(), 9);
         }
+        [TestMethod]
+        public void InsertNewArray()
+        {
+            var addArray = new int[] { 1, 3, 5, 7, 10, 2, 5, 3,43 };
+            DynamicArray array = new DynamicArray();
+            array.AddArray(addArray, 1);
+            Assert.AreEqual(array.GetCount(), 9);
+            var newArray = new int[] { 0, 1, 0, 1 };
+            array.AddArray(newArray, 3);
+            Assert.AreEqual(array.GetCount(), 13);
+        }
         public class DynamicArray
         {
             private int[] elements;
@@ -143,6 +154,12 @@ namespace UnitTestProject1
                 if ((position < count + 1) && (position > 0)) 
                     return elements[position-1];
                 return 0;
+            }
+
+            public void AddArray(int[] addArray,int position)
+            {
+                for (int j = addArray.Length - 1; !(j < 0); j--) 
+                    Insert(addArray[j], position);
             }
         }
     }
