@@ -47,6 +47,21 @@ namespace LinkedList
             list.DeleteNode(5);
             Assert.AreEqual(list.Length, 4);
         }
+        [TestMethod]
+        public void ReturnValueFromNode()
+        {
+            LinkedList list = new LinkedList();
+            list.Insert(15, 1);
+            Assert.AreEqual(list.ReturnElement(1), 15);
+            list.Add("test");
+            list.Add(234);
+            Assert.AreEqual("test", list.ReturnElement(2));
+            list.Add("Razvan");
+            list.Add("Andrei");
+            list.Insert("INSERT", 4);
+            Assert.AreEqual("INSERT",list .ReturnElement(4));
+            Assert.AreEqual("Andrei", list.ReturnElement(6));
+        }
 
         public class LinkedList
         {
@@ -97,9 +112,11 @@ namespace LinkedList
                 {
                     count++;
                     LinkedList temp = new LinkedList();
-                    for (int i = 0; i < count ; i++)
+                    int index = 0;
+                    while (firstNode != null)
                     {
-                        if (i == (position - 1)) 
+                        index++;
+                        if (index == (position)) 
                         {
                             temp.Add(dataNode);
                         }
@@ -126,6 +143,16 @@ namespace LinkedList
                 }
                 firstNode = temp.firstNode;
                 count--;
+            }
+
+            public object ReturnElement(int position)
+            {
+                object result;
+                Node temp = firstNode;
+                for (int i = 1; i < position; i++)
+                    temp  = temp .next;
+                result = temp.dataNode;
+                return result;
             }
         }
     }
