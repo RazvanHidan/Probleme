@@ -18,6 +18,20 @@ namespace LinkedList
             list.Add("Razvan");
             Assert.AreEqual(list.Length, 4);
         }
+        [TestMethod]
+        public void InsertNodeToLinkedList()
+        {
+            LinkedList list = new LinkedList();
+            list.Insert(15,1);
+            Assert.AreEqual(list.Length, 1);
+            list.Insert("test", 2);
+            Assert.AreEqual(list.Length, 2);
+            list.Add(234);
+            list.Add("Razvan");
+            list.Add("Andrei");
+            list.Insert("INSERT", 4);
+            Assert.AreEqual(list.Length, 6);
+        }
 
         public class LinkedList
         {
@@ -26,9 +40,10 @@ namespace LinkedList
                 public object dataNode;
                 public Node next;
             }
-            public Node firstNode;
-            public Node lastNode;
-            public int count;
+            private Node firstNode;
+            private Node lastNode;
+            private int count;
+
             public int Length
             {
                 get
@@ -57,6 +72,30 @@ namespace LinkedList
                     lastNode.next = node;
                 }
                 lastNode = node;
+            }
+
+            public void Insert(object dataNode, int position)
+            {
+                if ((firstNode == null) || (count == position - 1)) 
+                    Add(dataNode);
+                else
+                {
+                    count++;
+                    LinkedList temp = new LinkedList();
+                    for (int i = 0; i < count ; i++)
+                    {
+                        if (i == (position - 1)) 
+                        {
+                            temp.Add(dataNode);
+                        }
+                        else
+                        {
+                            temp.Add(firstNode.dataNode);
+                            firstNode = firstNode.next;
+                        }
+                    }
+                    firstNode = temp.firstNode;
+                }
             }
         }
     }
