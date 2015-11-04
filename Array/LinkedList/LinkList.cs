@@ -32,6 +32,21 @@ namespace LinkedList
             list.Insert("INSERT", 4);
             Assert.AreEqual(list.Length, 6);
         }
+        [TestMethod]
+        public void DeleteNodeFromLinkedList()
+        {
+            LinkedList list = new LinkedList();
+            list.Insert(15, 1);
+            list.DeleteNode(1);
+            Assert.AreEqual(list.Length, 0);
+            list.Insert("test", 2);
+            list.Add(234);
+            list.Add("Razvan");
+            list.Add("Andrei");
+            list.Insert("INSERT", 4);
+            list.DeleteNode(5);
+            Assert.AreEqual(list.Length, 4);
+        }
 
         public class LinkedList
         {
@@ -96,6 +111,21 @@ namespace LinkedList
                     }
                     firstNode = temp.firstNode;
                 }
+            }
+
+            public void DeleteNode(int position)
+            {
+                LinkedList temp = new LinkedList();
+                int index = 0;
+                while(firstNode != null)
+                {
+                    index++;
+                    if (index != position)
+                        temp.Add(firstNode.dataNode);
+                    firstNode = firstNode.next;
+                }
+                firstNode = temp.firstNode;
+                count--;
             }
         }
     }
