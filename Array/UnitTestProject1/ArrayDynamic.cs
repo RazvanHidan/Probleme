@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
 
 namespace ConstructDynamicArray
 {
@@ -95,15 +96,53 @@ namespace ConstructDynamicArray
             array.AddArray(newArray, 3);
             Assert.AreEqual(array.GetCount(), 13);
         }
-        public class DynamicArray
+        [TestMethod]
+        public void IEnumerable_ReturnELement()
+        {
+            var addArray = new int[] { 1, 3, 5, 7, 10, 2, 5, 3, 43 };
+            DynamicArray array = new DynamicArray();
+            array.AddArray(addArray, 1);
+            Assert.AreEqual(array.ReturnElement  (5), 10);
+            Assert.AreEqual(array.ReturnElement (2), 3);
+        }
+        public class DynamicArray:IEnumerable 
         {
             private int[] elements;
             private int count;
-
+            
+            
             public DynamicArray()
             {
                 elements = new int[0];
                 count = 0;
+            }
+
+            public IEnumerator GetEnumerator()
+            {
+                int stop = 0;
+                foreach (var number in elements)
+                {
+                    if (stop == count)
+                        break;
+                    stop++;
+                    yield return number;
+                }
+            }
+
+            public int ReturnElement(int position)
+            {
+                int result = 0;
+                int index = 0;
+                var enumerator = GetEnumerator();
+                while(enumerator .MoveNext())
+                {
+                    index++;
+                    if (index == position)
+                    {
+                        result = (int)enumerator.Current;
+                    }   
+                }
+                return result;
             }
 
             public int GetCount()
