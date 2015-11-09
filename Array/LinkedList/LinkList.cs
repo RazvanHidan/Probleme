@@ -44,7 +44,7 @@ namespace LinkedList
             list.Add("Razvan");
             list.Add("Andrei");
             list.Insert("INSERT", 4);
-            list.DeleteNode(5);
+            list.DeleteNode(4);
             Assert.AreEqual(list.Length, 4);
         }
         [TestMethod]
@@ -110,38 +110,41 @@ namespace LinkedList
                     Add(dataNode);
                 else
                 {
-                    count++;
-                    LinkedList temp = new LinkedList();
+                    Node newNode = new Node()
+                    {
+                        dataNode = dataNode
+                    };
+                    var tempNode = firstNode;
                     int index = 0;
-                    while (firstNode != null)
+                    while (tempNode != null)
                     {
                         index++;
-                        if (index == (position)) 
+                        if (index == (position-1))
                         {
-                            temp.Add(dataNode);
+                            newNode.next = tempNode.next;
+                            tempNode.next = newNode;
+                            break;
                         }
-                        else
-                        {
-                            temp.Add(firstNode.dataNode);
-                            firstNode = firstNode.next;
-                        }
+                        tempNode = tempNode.next;
                     }
-                    firstNode = temp.firstNode;
+                    count++;
                 }
             }
 
             public void DeleteNode(int position)
             {
-                LinkedList temp = new LinkedList();
+                var tempNode = firstNode;
                 int index = 0;
-                while(firstNode != null)
+                while(tempNode  != null)
                 {
                     index++;
-                    if (index != position)
-                        temp.Add(firstNode.dataNode);
-                    firstNode = firstNode.next;
+                    if (index == (position - 1))
+                    {
+                        tempNode.next = tempNode.next.next;
+                    }
+
+                    tempNode = tempNode.next;
                 }
-                firstNode = temp.firstNode;
                 count--;
             }
 
