@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
 
 namespace LinkedList
 {
@@ -62,8 +63,24 @@ namespace LinkedList
             Assert.AreEqual("INSERT",list .ReturnElement(4));
             Assert.AreEqual("Andrei", list.ReturnElement(6));
         }
+        [TestMethod]
+        public void IEnumerable_LinkList_RetrunNode()
+        {
+            LinkedList list = new LinkedList();
+            list.Insert(15, 1);
+            Assert.AreEqual(list.ReturnNode (1), 15);
+            list.Add("test");
+            list.Add(234);
+            Assert.AreEqual("test", list.ReturnNode(2));
+            list.Add("Razvan");
+            list.Add("Andrei");
+            list.Insert("INSERT", 4);
+            Assert.AreEqual("INSERT", list.ReturnNode(4));
+            Assert.AreEqual("Andrei", list.ReturnNode(6));
+        }
 
-        public class LinkedList
+
+        public class LinkedList:IEnumerable 
         {
             public class Node
             {
@@ -73,6 +90,30 @@ namespace LinkedList
             private Node firstNode;
             private Node lastNode;
             private int count;
+            public IEnumerator GetEnumerator()
+            {
+                var tempNode = firstNode;
+                while (tempNode != null)
+                {
+                    yield return tempNode.dataNode;
+                    tempNode = tempNode.next;
+                }
+            }
+
+            public object ReturnNode(int position)
+            {
+                int index = 0;
+                var elements = GetEnumerator();
+                while (elements.MoveNext()) 
+                {
+                    index++;
+                    if (index == position)
+                    {
+                        return elements.Current;
+                    }
+                }
+                return null; 
+            }
 
             public int Length
             {
