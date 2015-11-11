@@ -61,9 +61,8 @@ namespace ConstructDynamicArray
             array.Add(2);
             array.Add(8);
             array.Add(7);
-            Assert.AreEqual(array.GetElementAt(1), 7);
-            Assert.AreEqual(array.GetElementAt(-1), 0);
-            Assert.AreEqual(array.GetElementAt(12), 0);
+            Assert.AreEqual(array[1], 1);
+            Assert.AreEqual(array[3], 2);
         }
         [TestMethod]
         public void GetCount()
@@ -105,6 +104,37 @@ namespace ConstructDynamicArray
             Assert.AreEqual(array.ReturnElement  (5), 10);
             Assert.AreEqual(array.ReturnElement (2), 3);
         }
+
+        public class ArrayEnumerator:IEnumerator
+        {
+            public int[] element;
+            public int index;
+
+            public ArrayEnumerator(int[] element)
+            {
+                this.element = element;
+                index = -1;
+            }
+            object IEnumerator.Current
+            {
+                get
+                {
+                    return element[index];
+                }
+            }
+            
+            public bool MoveNext()
+            {
+                if (index++ < element.Length )
+                    return true;
+                else return false;
+            }
+            
+            public void Reset()
+            {
+                index =-1;
+            }
+        }
         public class DynamicArray:IEnumerable 
         {
             private int[] elements;
@@ -119,14 +149,8 @@ namespace ConstructDynamicArray
 
             public IEnumerator GetEnumerator()
             {
-                int stop = 0;
-                foreach (var number in elements)
-                {
-                    if (stop == count)
-                        break;
-                    stop++;
-                    yield return number;
-                }
+
+                return new ArrayEnumerator(elements);
             }
 
             public int ReturnElement(int position)
@@ -140,6 +164,7 @@ namespace ConstructDynamicArray
                     if (index == position)
                     {
                         result = (int)enumerator.Current;
+                        break;
                     }   
                 }
                 return result;
@@ -188,11 +213,16 @@ namespace ConstructDynamicArray
                 IncreaseLength(-1);
             }
 
-            public int GetElementAt(int position)
+            public int this[int position]
             {
-                if ((position < count + 1) && (position > 0)) 
-                    return elements[position-1];
-                return 0;
+                get
+                {
+                    return elements[position];
+                }
+                set
+                {
+                    elements[position] = value;
+                }
             }
 
             public void AddArray(int[] addArray,int position)
