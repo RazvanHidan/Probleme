@@ -10,7 +10,7 @@ namespace ConstructDynamicArray
         [TestMethod]
         public void AddNewElement()
         {
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             array.Add(7);
             Assert.AreEqual(array .GetCount(), 1);
             array.Add(1);
@@ -20,7 +20,7 @@ namespace ConstructDynamicArray
         [TestMethod]
         public void InsertNewElemennt()
         {
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             array.Add(7);
             array.Insert(1, 1);
             Assert.AreEqual(array.GetCount(), 2);
@@ -32,7 +32,7 @@ namespace ConstructDynamicArray
         [TestMethod]
         public void DeleteElemennt()
         {
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             array.Add(7);
             array.Delete(1);
             Assert.AreEqual(array.GetCount(), 0);
@@ -54,7 +54,7 @@ namespace ConstructDynamicArray
         [TestMethod]
         public void GetValueOfPosition()
         {
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             array.Add(7);
             array.Add(1);
             array.Add(4);
@@ -67,7 +67,7 @@ namespace ConstructDynamicArray
         [TestMethod]
         public void GetCount()
         {
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             Assert.AreEqual(array.GetCount(), 0);
             array.Add(7);
             Assert.AreEqual(array.GetCount(), 1);
@@ -88,7 +88,7 @@ namespace ConstructDynamicArray
         public void InsertNewArray()
         {
             var addArray = new int[] { 1, 3, 5, 7, 10, 2, 5, 3,43 };
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             array.AddArray(addArray, 1);
             Assert.AreEqual(array.GetCount(), 9);
             var newArray = new int[] { 0, 1, 0, 1 };
@@ -99,18 +99,27 @@ namespace ConstructDynamicArray
         public void IEnumerable_ReturnELement()
         {
             var addArray = new int[] { 1, 3, 5, 7, 10, 2, 5, 3, 43 };
-            DynamicArray array = new DynamicArray();
+            DynamicArray<int> array = new DynamicArray<int>();
             array.AddArray(addArray, 1);
             Assert.AreEqual(array.ReturnElement  (5), 10);
             Assert.AreEqual(array.ReturnElement (2), 3);
         }
-
-        public class ArrayEnumerator:IEnumerator
+        [TestMethod]
+        public void Array_GenericType_String()
         {
-            public int[] element;
+            var addArray = new string[] {"RAzvan","Andrei","Ionut","Negrean","Sorin","Alin","Cristi","3","43" };
+            DynamicArray<string> array = new DynamicArray<string>();
+            array.AddArray(addArray, 1);
+            Assert.AreEqual("Negrean",array.ReturnElement(4));
+            Assert.AreEqual("3",array.ReturnElement(8));
+        }
+
+        public class ArrayEnumerator <T>:IEnumerator
+        {
+            public T[] element;
             public int index;
 
-            public ArrayEnumerator(int[] element)
+            public ArrayEnumerator(T[] element)
             {
                 this.element = element;
                 index = -1;
@@ -135,27 +144,27 @@ namespace ConstructDynamicArray
                 index =-1;
             }
         }
-        public class DynamicArray:IEnumerable 
+        public class DynamicArray<T>:IEnumerable 
         {
-            private int[] elements;
+            private T[] elements;
             private int count;
             
             
             public DynamicArray()
             {
-                elements = new int[0];
+                elements = new T[0];
                 count = 0;
             }
 
             public IEnumerator GetEnumerator()
             {
 
-                return new ArrayEnumerator(elements);
+                return new ArrayEnumerator<T>(elements);
             }
 
-            public int ReturnElement(int position)
+            public T ReturnElement(int position)
             {
-                int result = 0;
+                T result=default(T);
                 int index = 0;
                 var enumerator = GetEnumerator();
                 while(enumerator .MoveNext())
@@ -163,7 +172,7 @@ namespace ConstructDynamicArray
                     index++;
                     if (index == position)
                     {
-                        result = (int)enumerator.Current;
+                        result = (T)enumerator.Current;
                         break;
                     }   
                 }
@@ -187,16 +196,16 @@ namespace ConstructDynamicArray
                 }
             }
 
-            public void Add(int newElement)
+            public void Add(T newElement)
             {
                 IncreaseLength(1);
                 elements[count - 1] = newElement;
             }
 
-            public void Insert(int element, int position)
+            public void Insert(T element, int position)
             {
                 IncreaseLength(1);
-                int aux;
+                T aux;
                 for (int i = position - 1; i < count; i++) 
                 {
                     aux = elements[i];
@@ -213,7 +222,7 @@ namespace ConstructDynamicArray
                 IncreaseLength(-1);
             }
 
-            public int this[int position]
+            public T this[int position]
             {
                 get
                 {
@@ -225,7 +234,7 @@ namespace ConstructDynamicArray
                 }
             }
 
-            public void AddArray(int[] addArray,int position)
+            public void AddArray(T[] addArray,int position)
             {
                 for (int j = addArray.Length - 1; !(j < 0); j--) 
                     Insert(addArray[j], position);
