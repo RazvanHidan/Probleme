@@ -10,24 +10,24 @@ namespace LinkedList
         [TestMethod]
         public void AddNodeToLinkedList() 
         {
-            LinkedList list = new LinkedList();
-            list.Add(15);
+            LinkedList<string> list = new LinkedList<string>();
+            list.Add("15");
             Assert.AreEqual(list.Length, 1);
             list.Add("test");
             Assert.AreEqual(list.Length, 2);
-            list.Add(23);
+            list.Add("23");
             list.Add("Razvan");
             Assert.AreEqual(list.Length, 4);
         }
         [TestMethod]
         public void InsertNodeToLinkedList()
         {
-            LinkedList list = new LinkedList();
-            list.Insert(15,1);
+            LinkedList<string> list = new LinkedList<string>();
+            list.Insert("15",1);
             Assert.AreEqual(list.Length, 1);
             list.Insert("test", 2);
             Assert.AreEqual(list.Length, 2);
-            list.Add(234);
+            list.Add("234");
             list.Add("Razvan");
             list.Add("Andrei");
             list.Insert("INSERT", 4);
@@ -36,12 +36,12 @@ namespace LinkedList
         [TestMethod]
         public void DeleteNodeFromLinkedList()
         {
-            LinkedList list = new LinkedList();
-            list.Insert(15, 1);
+            LinkedList<string> list = new LinkedList<string>();
+            list.Insert("15", 1);
             list.DeleteNode(1);
             Assert.AreEqual(list.Length, 0);
             list.Insert("test", 2);
-            list.Add(234);
+            list.Add("234");
             list.Add("Razvan");
             list.Add("Andrei");
             list.Insert("INSERT", 4);
@@ -51,11 +51,11 @@ namespace LinkedList
         [TestMethod]
         public void ReturnValueFromNode()
         {
-            LinkedList list = new LinkedList();
-            list.Insert(15, 1);
-            Assert.AreEqual(list.ReturnElement(1), 15);
+            LinkedList<string> list = new LinkedList<string>();
+            list.Insert("15", 1);
+            Assert.AreEqual("15",list.ReturnElement(1));
             list.Add("test");
-            list.Add(234);
+            list.Add("234");
             Assert.AreEqual("test", list.ReturnElement(2));
             list.Add("Razvan");
             list.Add("Andrei");
@@ -66,11 +66,11 @@ namespace LinkedList
         [TestMethod]
         public void IEnumerable_LinkList_RetrunNode()
         {
-            LinkedList list = new LinkedList();
-            list.Insert(15, 1);
-            Assert.AreEqual(list.ReturnNode (1), 15);
+            LinkedList<string> list = new LinkedList<string>();
+            list.Insert("15", 1);
+            Assert.AreEqual("15",list.ReturnNode (1));
             list.Add("test");
-            list.Add(234);
+            list.Add("List");
             Assert.AreEqual("test", list.ReturnNode(2));
             list.Add("Razvan");
             list.Add("Andrei");
@@ -78,14 +78,28 @@ namespace LinkedList
             Assert.AreEqual("INSERT", list.ReturnNode(4));
             Assert.AreEqual("Andrei", list.ReturnNode(6));
         }
-
-        public class ListEnumerator: IEnumerator
+        [TestMethod]
+        public void List_GenericType()
         {
-            public LinkedList element;
+            LinkedList<int> list = new LinkedList<int>();
+            list.Insert(15, 1);
+            Assert.AreEqual(list.ReturnNode(1),15);
+            list.Add(20);
+            list.Add(999);
+            Assert.AreEqual(list.ReturnNode(2),20);
+            list.Add(57);
+            list.Add(657);
+            list.Insert(44, 4);
+            Assert.AreEqual(list.ReturnNode(4),44);
+            Assert.AreEqual(list.ReturnNode(6),657);
+        }
+        public class ListEnumerator<T>: IEnumerator
+        {
+            public LinkedList<T> element;
             public int index;
-            private object current;
+            private T current;
 
-            public ListEnumerator(LinkedList element)
+            public ListEnumerator(LinkedList<T> element)
             {
                 this.element = element;
                 index = -1;
@@ -102,7 +116,7 @@ namespace LinkedList
             {
                 if (element.firstNode != null) 
                 {
-                    current = element.ReturnElement(index + 2);
+                    current = (T)element.ReturnElement(index + 2);
                     element.firstNode = element.firstNode.next;
                     return true;
                 } 
@@ -115,11 +129,11 @@ namespace LinkedList
             }
         }
 
-        public class LinkedList:IEnumerable 
+        public class LinkedList<T>:IEnumerable 
         {
             public class Node
             {
-                public object dataNode;
+                public T dataNode;
                 public Node next;
             }
             public Node firstNode;
@@ -127,9 +141,9 @@ namespace LinkedList
             private int count;
             public IEnumerator GetEnumerator()
             {
-                LinkedList temp = new LinkedList();
+                LinkedList<T> temp = new LinkedList<T>();
                 temp.firstNode = firstNode;
-                return new ListEnumerator(temp);
+                return new ListEnumerator<T>(temp);
             }
 
             public object ReturnNode(int position)
@@ -160,7 +174,7 @@ namespace LinkedList
                 count = 0;
             }
 
-            public void Add(object addDataNode)
+            public void Add(T addDataNode)
             {
                 count++;
                 Node node = new Node();
@@ -176,7 +190,7 @@ namespace LinkedList
                 lastNode = node;
             }
 
-            public void Insert(object dataNode, int position)
+            public void Insert(T dataNode, int position)
             {
                 if ((firstNode == null) || (count == position - 1)) 
                     Add(dataNode);
@@ -222,7 +236,7 @@ namespace LinkedList
 
             public object ReturnElement(int position)
             {
-                object result;
+                T result;
                 Node temp = firstNode;
                 for (int i = 1; i < position; i++)
                     temp  = temp .next;
