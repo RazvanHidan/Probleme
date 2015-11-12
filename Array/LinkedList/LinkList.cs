@@ -79,6 +79,41 @@ namespace LinkedList
             Assert.AreEqual("Andrei", list.ReturnNode(6));
         }
 
+        public class ListEnumerator: IEnumerator
+        {
+            public LinkedList element;
+            public int index;
+            private object current;
+
+            public ListEnumerator(LinkedList element)
+            {
+                this.element = element;
+                index = -1;
+            }
+            object IEnumerator.Current
+            {
+                get
+                {
+                    return current;
+                }
+            }
+
+            public bool MoveNext()
+            {
+                if (element.firstNode != null) 
+                {
+                    current = element.ReturnElement(index + 2);
+                    element.firstNode = element.firstNode.next;
+                    return true;
+                } 
+                else return false;
+            }
+
+            public void Reset()
+            {
+                index = -1;
+            }
+        }
 
         public class LinkedList:IEnumerable 
         {
@@ -87,17 +122,14 @@ namespace LinkedList
                 public object dataNode;
                 public Node next;
             }
-            private Node firstNode;
-            private Node lastNode;
+            public Node firstNode;
+            public Node lastNode;
             private int count;
             public IEnumerator GetEnumerator()
             {
-                var tempNode = firstNode;
-                while (tempNode != null)
-                {
-                    yield return tempNode.dataNode;
-                    tempNode = tempNode.next;
-                }
+                LinkedList temp = new LinkedList();
+                temp.firstNode = firstNode;
+                return new ListEnumerator(temp);
             }
 
             public object ReturnNode(int position)
@@ -106,8 +138,7 @@ namespace LinkedList
                 var elements = GetEnumerator();
                 while (elements.MoveNext()) 
                 {
-                    index++;
-                    if (index == position)
+                    if (index++ == (position-1))
                     {
                         return elements.Current;
                     }
