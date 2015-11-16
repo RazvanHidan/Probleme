@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 namespace Tree
 {
-    internal class BinaryTree<T>: IEnumerator<T>
+    internal class BinaryTree<T>: IEnumerator<T>where T :IComparable
     {
         public Node<T> root;
         private int count;
@@ -16,18 +16,50 @@ namespace Tree
 
         public void Add(T value)
         {
+            var newNode = new Node<T>(value);
             if (root == null)
-                root = new Node<T>(value);
+                root = newNode;
             else
-                root = null;
+            {
+                var curentNode = root;
+                bool added = false;
+                while (added == false)
+                {
+                    if (-1 == value.CompareTo(curentNode.value)) //go left
+                    {
+                        if (curentNode.left == null)
+                        {
+                            curentNode.left = newNode;
+                            added = true;
+                        }
+                        else
+                        {
+                            curentNode = curentNode.left;
+                        }
+                    }
+                    else
+                    {
+                        if (curentNode.right == null)
+                        {
+                            curentNode.right = newNode;
+                            added = true;
+                        }
+                        else
+                        {
+                            curentNode = curentNode.right;
+                        }
+                    }
+                }
+            }   
         }
+        
 
 
         public T Current
         {
             get
             {
-                if (root == null)
+                if(!MoveNext())
                     return default(T);
                 else
                     return root.value;
@@ -52,6 +84,12 @@ namespace Tree
             if (root == null)
                 return false;
             else
+            {
+                if (root.left != null)
+                    return true;
+                if (root.right != null)
+                    return true;
+            }
             return true;
         }
 

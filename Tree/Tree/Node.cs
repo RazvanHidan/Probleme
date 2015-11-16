@@ -9,8 +9,6 @@
         public Node(T value)
         {
             this.value = value;
-            left = null;
-            right = null;
         }
     }
 }
