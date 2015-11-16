@@ -13,7 +13,15 @@ namespace Tree
         public void BinaryTreeIsNull()
         {
             var tree = new BinaryTree<int>();
-            tree.Current.ShouldBeNull();
+            tree.root.ShouldBeNull();
+        }
+
+        [TestMethod]
+        public void BinaryTreeAddRoot()
+        {
+            var tree = new BinaryTree<int>();
+            tree.Add(4);
+            tree.Current.ShouldEqual(4);
         }
     }
 }

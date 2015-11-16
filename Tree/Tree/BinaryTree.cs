@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 namespace Tree
 {
-    internal class BinaryTree<T>: IEnumerator<T[]>
+    internal class BinaryTree<T>: IEnumerator<T>
     {
         public Node<T> root;
         private int count;
@@ -14,11 +14,23 @@ namespace Tree
             count = 0;
         }
 
-        public T[] Current
+        public void Add(T value)
+        {
+            if (root == null)
+                root = new Node<T>(value);
+            else
+                root = null;
+        }
+
+
+        public T Current
         {
             get
             {
-                return default(T[]);
+                if (root == null)
+                    return default(T);
+                else
+                    return root.value;
             }
         }
 
@@ -40,7 +52,7 @@ namespace Tree
             if (root == null)
                 return false;
             else
-                return true;
+            return true;
         }
 
         public void Reset()
