@@ -22,6 +22,7 @@ namespace Tree
             var tree = new BinaryTree<int>();
             tree.Add(4);
             tree.Current.ShouldEqual(4);
+            
         }
 
         [TestMethod]

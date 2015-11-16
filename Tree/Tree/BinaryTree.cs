@@ -3,15 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 namespace Tree
 {
-    internal class BinaryTree<T>: IEnumerator<T>where T :IComparable
+    internal class BinaryTree<T> : IEnumerator<T> where T : IComparable
     {
         public Node<T> root;
-        private int count;
+        public Node<T>[] parent;
 
         public BinaryTree()
         {
             root = null;
-            count = 0;
         }
 
         public void Add(T value)
@@ -21,48 +20,46 @@ namespace Tree
                 root = newNode;
             else
             {
-                var curentNode = root;
+                var currentNode = root;
                 bool added = false;
                 while (added == false)
                 {
-                    if (-1 == value.CompareTo(curentNode.value)) //go left
+                    if (-1 == value.CompareTo(currentNode.value)) //go left
                     {
-                        if (curentNode.left == null)
+                        if (currentNode.left == null)
                         {
-                            curentNode.left = newNode;
+                            currentNode.left = newNode;
                             added = true;
                         }
                         else
                         {
-                            curentNode = curentNode.left;
+                            currentNode = currentNode.left;
                         }
                     }
                     else
                     {
-                        if (curentNode.right == null)
+                        if (currentNode.right == null)
                         {
-                            curentNode.right = newNode;
+                            currentNode.right = newNode;
                             added = true;
                         }
                         else
                         {
-                            curentNode = curentNode.right;
+                            currentNode = currentNode.right;
                         }
                     }
                 }
-            }   
+            }
         }
-        
-
 
         public T Current
         {
             get
             {
-                if(!MoveNext())
-                    return default(T);
-                else
+                if(MoveNext())
                     return root.value;
+                else
+                    throw new NotImplementedException();
             }
         }
 
@@ -83,12 +80,13 @@ namespace Tree
         {
             if (root == null)
                 return false;
-            else
+            else if (root.left != null)
             {
-                if (root.left != null)
-                    return true;
-                if (root.right != null)
-                    return true;
+                root = root.left;
+            }
+            else if (root.right != null)
+            {
+                root = root.right;
             }
             return true;
         }
