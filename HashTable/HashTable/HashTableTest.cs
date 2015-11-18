@@ -14,5 +14,20 @@ namespace HashTable
             var diverta = new Library();
             diverta.keys.ShouldBeNull();
         }
+
+        [TestMethod]
+        public void LibraryUniqueAdd()
+        {
+            var diverta = new Library();
+            diverta.Add("Ion ");
+            diverta.Add("Ion Praslea");
+            diverta.Add("Mara");
+            diverta.keys.ShouldContain("Ion ");
+            diverta.keys.ShouldContain("Ion Praslea");
+            diverta.keys.ShouldContain("Mara");
+            diverta.buckets.ShouldContain("Ion ");
+            diverta.buckets.ShouldContain("Ion Praslea");
+            diverta.buckets.ShouldContain("Mara");
+        }
     }
 }
