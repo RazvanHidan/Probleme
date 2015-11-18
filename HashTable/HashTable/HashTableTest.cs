@@ -25,9 +25,19 @@ namespace HashTable
             diverta.keys.ShouldContain("Ion ");
             diverta.keys.ShouldContain("Ion Praslea");
             diverta.keys.ShouldContain("Mara");
-            diverta.buckets.ShouldContain("Ion ");
-            diverta.buckets.ShouldContain("Ion Praslea");
-            diverta.buckets.ShouldContain("Mara");
+        }
+        [TestMethod]
+        public void LibraryAdd()
+        {
+            var diverta = new Library();
+            diverta.Add("Ion");
+            diverta.Add("Ion Praslea");
+            diverta.Add("Mara");
+            diverta.keys.ShouldContain("Ion");
+            diverta.keys.ShouldContain("Ion Praslea");
+            diverta.keys.ShouldContain("Mara");
+            diverta.entries[6].value.ShouldContain("Ion");
+            diverta.entries[6].value.ShouldContain("Ion Praslea");
         }
     }
 }
