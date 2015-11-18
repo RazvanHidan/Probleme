@@ -38,6 +38,30 @@ namespace HashTable
             count++;
         }
 
+        public bool Find(string value)
+        {
+            bool search = false;
+            var index = HashFunction(value);
+            search = SearchInBucket(value, search, index);
+            return search;
+        }
+
+        private bool SearchInBucket(string value, bool find, int index)
+        {
+            if (entry[index] != null)
+            {
+                var temp = entry[index];
+                while (temp != null)
+                {
+                    if (temp.value == value)
+                        return true;
+                    temp = temp.next;
+                }
+            }
+
+            return find;
+        }
+
         private void AddEntry(string value, int index)
         {
             if (entry[index] == null)
