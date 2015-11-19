@@ -21,8 +21,7 @@ namespace Tree
         {
             var tree = new BinaryTree<int>();
             tree.Add(4);
-            tree.Current.ShouldEqual(4);
-            
+            tree.ShouldContain(4);
         }
 
         [TestMethod]
@@ -31,10 +30,6 @@ namespace Tree
             var tree = new BinaryTree<int>();
             tree.Add(4);
             tree.Add(1);
-            tree.Add(5);
-            tree.root.value.ShouldEqual(4);
-            tree.root.left.value.ShouldEqual(1);
-            tree.root.right.value.ShouldEqual(5);
         }
     }
 }

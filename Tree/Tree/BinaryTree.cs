@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 namespace Tree
 {
-    internal class BinaryTree<T> : IEnumerator<T> where T : IComparable
+    public class BinaryTree<T> :IEnumerable<T> where T : IComparable
     {
         public Node<T> root;
-        public Node<T>[] parent;
 
         public BinaryTree()
         {
@@ -52,48 +51,58 @@ namespace Tree
             }
         }
 
-        public T Current
+        public IEnumerator<T> GetEnumerator()
         {
-            get
+            return new EnumeratorTree(root);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        private class EnumeratorTree : IEnumerator<T>
+        {
+            private Node<T> root;
+
+            public EnumeratorTree(Node<T> root)
             {
-                if(MoveNext())
+                this.root = root;
+            }
+
+            public T Current
+            {
+                get
+                {
                     return root.value;
-                else
-                    throw new NotImplementedException();
+                }
             }
-        }
 
-        object IEnumerator.Current
-        {
-            get
+            object IEnumerator.Current
             {
-                return Current;
+                get
+                {
+                    return Current;
+                }
             }
-        }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool MoveNext()
-        {
-            if (root == null)
-                return false;
-            else if (root.left != null)
+            public void Dispose()
             {
-                root = root.left;
             }
-            else if (root.right != null)
-            {
-                root = root.right;
-            }
-            return true;
-        }
 
-        public void Reset()
-        {
-            throw new NotImplementedException();
+            public bool MoveNext()
+            {
+
+                if (root == null)
+                    return false;
+                else return true;
+                
+            }
+
+            public void Reset()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
