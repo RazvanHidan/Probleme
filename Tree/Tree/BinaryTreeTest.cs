@@ -30,6 +30,10 @@ namespace Tree
             var tree = new BinaryTree<int>();
             tree.Add(4);
             tree.Add(1);
+            tree.Add(10);
+            tree.ShouldContain(1);
+            tree.ShouldContain(4);
+            tree.ShouldContain(10);
         }
     }
 }
