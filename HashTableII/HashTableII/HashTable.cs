@@ -91,6 +91,43 @@ namespace HashTableII
             numberOfElement--;
         }
 
+        public Tvalue this[Tkey key]
+        {
+            get
+            {
+                var index = GetHashCode(key);
+                if (keys[index] != 0)
+                {
+                    index = keys[index];
+                    while (index != -1)
+                    {
+                        if (key.CompareTo(buckets[index].key) == 0)
+                            return buckets[index].value;
+                        index = buckets[index].next;
+                    }
+                }
+                return default(Tvalue);
+            }
+            set
+            {
+                var index = GetHashCode(key);
+                if (keys[index] != 0)
+                {
+                    index = keys[index];
+                    while (index != -1)
+                    {
+                        if (key.CompareTo(buckets[index].key) == 0)
+                        {
+                            buckets[index].value = value;
+                            break;
+                        }
+                        index = buckets[index].next;
+                    }
+                }
+                value = default(Tvalue);
+            }
+        }
+
         public int Count
         {
             get
@@ -101,7 +138,7 @@ namespace HashTableII
 
         private int GetHashCode(Tkey obj)
         {
-            return 2;//Math.Abs(obj.GetHashCode() % keys.Length);
+            return Math.Abs(obj.GetHashCode() % keys.Length);
         }
 
         int IHasher<Tkey>.GetHashCode(Tkey obj)
