@@ -30,5 +30,18 @@ namespace HashTableII
             phonebook.Add("Ionut Marin", 076653421);
             phonebook.Count.ShouldEqual(2);
         }
+
+        [TestMethod]
+        public void HashContain()
+        {
+            Hashtable<string, int> phonebook = new Hashtable<string, int>(100);
+            phonebook.Add("Razvan Hidan", 0744596712);
+            phonebook.Add("Ionut Marin", 076653421);
+            phonebook.Add("Bogdan Dragos", 07111111);
+            phonebook.Add("Maria Marioara", 0783442);
+            phonebook.ContainsKey("Razvan Hidan");
+            phonebook.ContainsKey("Bogdan Dragos");
+            phonebook.ContainsKey("Razvan").ShouldBeFalse();
+        }
     }
 }

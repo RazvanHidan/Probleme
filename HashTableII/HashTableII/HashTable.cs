@@ -10,9 +10,9 @@ namespace HashTableII
 
     public struct Bucket<TKey, Tvalue>
     {
-        TKey key;
-        Tvalue value;
-        int next;
+        public TKey key;
+        public Tvalue value;
+        public int next;
         
         public Bucket(TKey key,Tvalue value,int next)
         {
@@ -22,7 +22,7 @@ namespace HashTableII
         }
     } 
 
-    public class Hashtable<Tkey, Tvalue>:IHasher<Tkey>
+    public class Hashtable<Tkey, Tvalue>:IHasher<Tkey>where Tkey:IComparable
     {
         private int[] keys;
         private Bucket<Tkey, Tvalue>[] buckets;
@@ -48,6 +48,22 @@ namespace HashTableII
             int next = keys[position] == 0 ? -1 : keys[position];
             buckets[count] = new Bucket<Tkey, Tvalue>(key, value, next);
             keys[position] = count;
+        }
+
+        public bool ContainsKey(Tkey key)
+        {
+            var index = GetHashCode(key);
+            if (keys[index] != 0)
+            {
+                index = keys[index];
+                while (index != -1)
+                {
+                    if (key.CompareTo(buckets[index].key) == 0)
+                        return true;
+                    index = buckets[index].next;
+                }
+            }
+            return false;
         }
 
         public int Count
