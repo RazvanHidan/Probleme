@@ -8,24 +8,24 @@ namespace HashTableII
         int GetHashCode(T obj);
     }
 
-    public struct Bucket<key, value>
+    public struct Bucket<TKey, Tvalue>
     {
-        key keyValue;
-        value infoKey;
-        int next
+        TKey key;
+        Tvalue value;
+        int next;
+        
+        public Bucket(TKey key,Tvalue value,int next)
         {
-            get
-            {
-                return -1;
-            }
+            this.key = key;
+            this.value = value;
+            this.next = next;
         }
     } 
 
-    public class Hashtable<key, value>:IHasher<key>
+    public class Hashtable<Tkey, Tvalue>:IHasher<Tkey>
     {
-        private key keyValue;
         private int[] keys;
-        private Bucket<key, value>[] buckets;
+        private Bucket<Tkey, Tvalue>[] buckets;
         private int count;
 
         public Hashtable()
@@ -41,6 +41,15 @@ namespace HashTableII
             Array.Resize(ref buckets, capacity);
         }
 
+        public void Add(Tkey key, Tvalue value)
+        {
+            count++;
+            var position = GetHashCode(key);
+            int next = keys[position] == 0 ? -1 : keys[position];
+            buckets[count] = new Bucket<Tkey, Tvalue>(key, value, next);
+            keys[position] = count;
+        }
+
         public int Count
         {
             get
@@ -49,12 +58,12 @@ namespace HashTableII
             }
         }
 
-        private int GetHashCode(key obj)
+        private int GetHashCode(Tkey obj)
         {
-            throw new NotImplementedException();
+            return Math.Abs(obj.GetHashCode() % keys.Length);
         }
 
-        int IHasher<key>.GetHashCode(key obj)
+        int IHasher<Tkey>.GetHashCode(Tkey obj)
         {
             throw new NotImplementedException();
         }

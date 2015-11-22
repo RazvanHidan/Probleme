@@ -20,5 +20,15 @@ namespace HashTableII
             Hashtable<string, int> phonebook = new Hashtable<string, int>(10);
             phonebook.Count.ShouldEqual(0);
         }
+
+        [TestMethod]
+        public void AddToHashtable()
+        {
+            Hashtable<string, int> phonebook = new Hashtable<string, int>(100);
+            phonebook.Add("Razvan Hidan", 0744596712);
+            phonebook.Count.ShouldEqual(1);
+            phonebook.Add("Ionut Marin", 076653421);
+            phonebook.Count.ShouldEqual(2);
+        }
     }
 }
