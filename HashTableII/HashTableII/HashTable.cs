@@ -55,76 +55,47 @@ namespace HashTableII
 
         public bool ContainsKey(Tkey key)
         {
-            var index = GetHashCode(key);
-            if (keys[index] != 0)
-            {
-                index = keys[index];
-                while (index != -1)
-                {
-                    if (key.CompareTo(buckets[index].key) == 0)
-                        return true;
-                    index = buckets[index].next;
-                }
-            }
-            return false;
+            return BucketPositionKey(key) != 0 ? true : false;
         }
 
         public void Remove(Tkey key)
         {
-            var index = GetHashCode(key);
-            if (keys[index] != 0)
+            var bucketKey = BucketPositionKey(key);
+            if (bucketKey!= 0)
             {
-                index = keys[index];
-                int temp = 0;
-                while (index != -1)
+                int code = GetHashCode(key);
+                int firstKey = keys[code];
+                if (buckets[firstKey].next == -1)
                 {
-                    if (key.CompareTo(buckets[index].key) == 0)
-                    {
-                        buckets[temp].next = buckets[index].next;
-                        buckets[index] = buckets[0];
-                        break;
-                    }
-                    temp = index;
-                    index = buckets[index].next;
+                    keys[code] = 0;
                 }
+                else if (buckets[firstKey].key.CompareTo(key)==0) 
+                {
+                    keys[code] = buckets[firstKey].next;
+                }
+                else
+                {
+                    int step = keys[code];
+                    while (buckets[step].next != bucketKey)
+                    {
+                        step = buckets[step].next;
+                    }
+                    buckets[step].next = buckets[bucketKey].next;
+                }
+                buckets[bucketKey] = buckets[0];
+                numberOfElement--;
             }
-            numberOfElement--;
         }
 
         public Tvalue this[Tkey key]
         {
             get
             {
-                var index = GetHashCode(key);
-                if (keys[index] != 0)
-                {
-                    index = keys[index];
-                    while (index != -1)
-                    {
-                        if (key.CompareTo(buckets[index].key) == 0)
-                            return buckets[index].value;
-                        index = buckets[index].next;
-                    }
-                }
-                return default(Tvalue);
+                return BucketPositionKey(key) != 0 ? buckets[BucketPositionKey(key)].value : default(Tvalue);
             }
             set
             {
-                var index = GetHashCode(key);
-                if (keys[index] != 0)
-                {
-                    index = keys[index];
-                    while (index != -1)
-                    {
-                        if (key.CompareTo(buckets[index].key) == 0)
-                        {
-                            buckets[index].value = value;
-                            break;
-                        }
-                        index = buckets[index].next;
-                    }
-                }
-                value = default(Tvalue);
+                buckets[BucketPositionKey(key)].value = BucketPositionKey(key) != 0 ? value : default(Tvalue);
             }
         }
 
@@ -134,6 +105,22 @@ namespace HashTableII
             {
                 return numberOfElement;
             }
+        }
+
+        private int BucketPositionKey(Tkey key)
+        {
+            var index = GetHashCode(key);
+            if (keys[index] != 0)
+            {
+                index = keys[index];
+                while (index != -1)
+                {
+                    if (key.CompareTo(buckets[index].key) == 0)
+                        return index;
+                    index = buckets[index].next;
+                }
+            }
+            return 0;
         }
 
         private int GetHashCode(Tkey obj)

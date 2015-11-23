@@ -58,6 +58,8 @@ namespace HashTableII
             phonebook.ContainsKey("Razvan Hidan").ShouldBeFalse();
             phonebook.Remove("Maria Marioara");
             phonebook.ContainsKey("Maria Marioara").ShouldBeFalse();
+            phonebook.Remove("Mihai Eminescu");
+            phonebook.ContainsKey("Mihai Eminescu").ShouldBeFalse();
         }
 
         [TestMethod]
